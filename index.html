@@ -83,6 +83,25 @@
               <li class="menu-item-price">$6.50</li>
             </ul>
           </article>
+            <article class="menu_item">
+              <img
+                src="assets/images/image-waffle-mobile.jpg"
+                alt=""
+                class="menu_item-img"
+              />
+              <button class="btn_add-cart">
+                <img
+                  src="assets/images/icon-add-to-cart.svg"
+                  alt="cart icon"
+                  class="icon_cart"
+                />Add to Cart
+              </button>
+              <ul class="menu_item-info">
+                <li class="menu-item-type">Waffle</li>
+                <li class="menu-item-name">Waffle with Berries</li>
+                <li class="menu-item-price">$6.50</li>
+              </ul>
+            </article>
         </div>
       </section>
       <section class="section_cart">
@@ -98,19 +117,28 @@
                 <span class="cart_item-price">@$10.99</span>
                 <span class="cart_item-total">@$10.99</span>
               </div>
-              <button
-                class="btn_removeItem"
-                aria-label="Remove Waffle with Berries from cart"
-              >
-                <img
-                  src="assets/images/icon-remove-item.svg"
-                  alt="Remove item"
-                  class="icon_removeItem"
-                />
-              </button>
             </div>
+            <button
+              class="btn_removeItem"
+              aria-label="Remove Waffle with Berries from cart"
+            >
+              <img
+                src="assets/images/icon-remove-item.svg"
+                alt="Remove item"
+                class="icon_removeItem"
+              />
+            </button>
           </li>
         </ul>
+        <div class="cart_total-container">
+          <p class="cart_total-label">Order Total</p>
+          <span class="total" id="total">$46.50</span>
+        </div>
+        <div class="eco_message-container">
+          <img src="assets/images/icon-carbon-neutral.svg" alt="" class="icon_tree">
+          <p class="eco_text">This is a <b>carbon-neutral</b> delivery</p>
+        </div>
+        <button class="btn_confirmOrder" id="confirmOrder">Confirm Order</button>
       </section>
     </main>
 
