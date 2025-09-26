@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- displays site properly based on user's device -->
 
     <link
       rel="icon"
@@ -25,91 +24,14 @@
     <main class="main">
       <section class="section_menu">
         <h1 class="section_title">Deserts</h1>
-        <div class="menu_grid">
-          <article class="menu_item">
-            <img
-              src="assets/images/image-waffle-mobile.jpg"
-              alt=""
-              class="menu_item-img"
-            />
-            <button class="btn_add-cart">
-              <img
-                src="assets/images/icon-add-to-cart.svg"
-                alt="cart icon"
-                class="icon_cart"
-              />Add to Cart
-            </button>
-            <ul class="menu_item-info">
-              <li class="menu-item-type">Waffle</li>
-              <li class="menu-item-name">Waffle with Berries</li>
-              <li class="menu-item-price">$6.50</li>
-            </ul>
-          </article>
-          <article class="menu_item">
-            <img
-              src="assets/images/image-waffle-mobile.jpg"
-              alt=""
-              class="menu_item-img"
-            />
-            <button class="btn_add-cart">
-              <img
-                src="assets/images/icon-add-to-cart.svg"
-                alt="cart icon"
-                class="icon_cart"
-              />Add to Cart
-            </button>
-            <ul class="menu_item-info">
-              <li class="menu-item-type">Waffle</li>
-              <li class="menu-item-name">Waffle with Berries</li>
-              <li class="menu-item-price">$6.50</li>
-            </ul>
-          </article>
-          <article class="menu_item">
-            <img
-              src="assets/images/image-waffle-mobile.jpg"
-              alt=""
-              class="menu_item-img"
-            />
-            <button class="btn_add-cart">
-              <img
-                src="assets/images/icon-add-to-cart.svg"
-                alt="cart icon"
-                class="icon_cart"
-              />Add to Cart
-            </button>
-            <ul class="menu_item-info">
-              <li class="menu-item-type">Waffle</li>
-              <li class="menu-item-name">Waffle with Berries</li>
-              <li class="menu-item-price">$6.50</li>
-            </ul>
-          </article>
-            <article class="menu_item">
-              <img
-                src="assets/images/image-waffle-mobile.jpg"
-                alt=""
-                class="menu_item-img"
-              />
-              <button class="btn_add-cart">
-                <img
-                  src="assets/images/icon-add-to-cart.svg"
-                  alt="cart icon"
-                  class="icon_cart"
-                />Add to Cart
-              </button>
-              <ul class="menu_item-info">
-                <li class="menu-item-type">Waffle</li>
-                <li class="menu-item-name">Waffle with Berries</li>
-                <li class="menu-item-price">$6.50</li>
-              </ul>
-            </article>
-        </div>
+        <div class="menu_grid" id="menu_list"></div>
       </section>
       <section class="section_cart">
         <h2 class="section_subtitle">
           Your Cart (<span id="cart_quantity"></span>)
         </h2>
         <ul class="cart_list">
-          <li class="cart_item">
+          <!-- <li class="cart_item">
             <div class="cart_item-description">
               <span class="cart_item-name">Waffle with Berries</span>
               <div class="cart_item-info">
@@ -128,19 +50,61 @@
                 class="icon_removeItem"
               />
             </button>
-          </li>
+          </li> -->
         </ul>
         <div class="cart_total-container">
           <p class="cart_total-label">Order Total</p>
           <span class="total" id="total">$46.50</span>
         </div>
         <div class="eco_message-container">
-          <img src="assets/images/icon-carbon-neutral.svg" alt="" class="icon_tree">
+          <img
+            src="assets/images/icon-carbon-neutral.svg"
+            alt=""
+            class="icon_tree"
+          />
           <p class="eco_text">This is a <b>carbon-neutral</b> delivery</p>
         </div>
-        <button class="btn_confirmOrder" id="confirmOrder">Confirm Order</button>
+        <button class="btn_confirmOrder" id="confirmOrder">
+          Confirm Order
+        </button>
       </section>
     </main>
+
+    <section class="confirm_order-background hidden" id="orderSection">
+      <article class="confirm_order">
+        <img
+          src="assets/images/icon-order-confirmed.svg"
+          alt=""
+          class="icon_confirm_order"
+        />
+        <h1 class="section_title">Order Confirmed</h1>
+        <p class="confirm_order-message">We hope you enjoy your food!</p>
+        <ul class="order_list">
+          <!-- <li class="order_item">
+            <img
+              src="assets/images/image-baklava-mobile.jpg"
+              alt=""
+              class="order_item-image"
+            />
+            <div class="order_content-center">
+              <span class="order_item-name">Waffle with Berries</span>
+              <div class="order_item-info">
+                <span class="order_item-quantity">$42.00</span>
+                <span class="order_item-price">20x</span>
+              </div>
+            </div>
+            <span class="order_item-total">$128.00</span>
+          </li> -->
+          <div class="order_total-container">
+            <p class="order_total-label">Order Total</p>
+            <span class="order_total" id="order_total">$300</span>
+          </div>
+        </ul>
+        <button class="btn_confirmOrder" id="startNewOrder">
+          Star New Order
+        </button>
+      </article>
+    </section>
 
     <div class="attribution">
       Challenge by
@@ -150,5 +114,7 @@
         >Philippe Dias</a
       >.
     </div>
+
+    <script src="JS/script.js"></script>
   </body>
 </html>
