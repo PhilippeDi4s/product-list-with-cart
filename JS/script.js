@@ -1,8 +1,30 @@
 (function () {
   //ELEMENTOS HTML
   const menu_list = document.getElementById("menu_list");
+  const cartList = document.getElementById("cartList");
   const confirmOrder = document.getElementById("confirmOrder");
   const orderSection = document.getElementById("orderSection");
+
+  // ==========================================================
+  // FUNÇÕES AUXILIARES (Definição da Função)
+  // ==========================================================
+
+  function atualizarTotalDoCarrinho() {
+    const cartTotalElement = document.querySelector(".total");
+
+    const nodeListTotalPrices = cartList.querySelectorAll(".cart_item-total");
+
+    const numericPrices = Array.from(nodeListTotalPrices).map((price) => {
+      const _numericPrices = price.innerText.replace(/[^0-9.]/g, "");
+      return Number(_numericPrices);
+    });
+
+    const totalPrices = numericPrices.reduce((total, price) => {
+      return total + price;
+    }, 0);
+
+    return (cartTotalElement.innerText = `$${totalPrices.toFixed(2)}`);
+  }
 
   //CARREGAMENTO MENU (Interação com JSON)
   fetch("../data.json")
@@ -30,9 +52,7 @@
                 item.image.tablet
               }">
 
-                <img class = "menu_item-img" src="${
-                  item.image.mobile
-                }" alt="Waffle com Frutas">
+                <img class = "menu_item-img" src="${item.image.mobile}">
               </picture>
               <button class="btn_add-cart menu_item-image-wrapper btn_item-position btn-wrapper" id = "btn_add_cart">
                 <img
@@ -71,8 +91,8 @@
       btnAddCart.disabled = true;
       quantitySelector.style.opacity = 1;
       quantitySelector.style.pointerEvents = "auto";
+      quantitySelector.querySelector(".quantity-selector__value").innerText = 1;
       // create and append cart item using data attached to the menu item
-      const cartList = document.getElementById("cartList");
       const cartItem = document.createElement("li");
       cartItem.classList = "cart_item";
 
@@ -82,7 +102,10 @@
         "Item";
       const itemPriceRaw =
         menuItem.dataset.price ||
-        menuItem.querySelector(".menu-item-price")?.innerText?.replace(/[^0-9.-]+/g, "") || "0";
+        menuItem
+          .querySelector(".menu-item-price")
+          ?.innerText?.replace(/[^0-9.-]+/g, "") ||
+        "0";
       const itemPrice = Number(itemPriceRaw);
 
       cartItem.innerHTML = `<div class="cart_item-description">
@@ -104,71 +127,68 @@
               />
             </button>`;
       cartList.appendChild(cartItem);
+      atualizarTotalDoCarrinho();
     }
 
     //INCREASE QUANTITY
     if (event.target.closest(".quantity-selector__increment")) {
       const menuItem = event.target.closest(".menu_item");
-      const _orderQuantity = menuItem.querySelector(".quantity-selector__value");
-      const raw = _orderQuantity?.innerText?.trim() ?? "";
-      const parsed = Number(raw);
+      const _orderQuantity = menuItem.querySelector(
+        ".quantity-selector__value"
+      );
 
-      let orderQuantity = Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+      let orderQuantity = Number(_orderQuantity?.innerText?.trim() ?? "0");
       orderQuantity += 1;
       _orderQuantity.innerText = orderQuantity;
-      console.log(orderQuantity);
-
       //INCREASE QUANTITY CART
-    
-    // 1. Obtém o nome do item do menu
-    const itemName = menuItem.dataset.name || menuItem.querySelector(".menu-item-name")?.innerText?.trim();
-    
-    // 2. Encontra o elemento 'cartList' principal
-    const cartListContainer = document.getElementById("cartList"); 
-    
-    // 3. Busca o item do carrinho correspondente usando o nome
-    // Itera sobre todos os itens do carrinho para encontrar o que corresponde ao nome.
-    // **Nota:** Assumindo que você só tem um item com esse nome no carrinho.
-    const cartItem = Array.from(cartListContainer.querySelectorAll(".cart_item")).find(item => {
-        return item.querySelector(".cart_item-name")?.innerText?.trim() === itemName;
-    });
+      const itemName =
+        menuItem.dataset.name ||
+        menuItem.querySelector(".menu-item-name")?.innerText?.trim();
 
-    if (cartItem) {
-        // 4. Se o item do carrinho for encontrado, atualiza a quantidade e o total
-        const cartItemQuantityElement = cartItem.querySelector(".cart_item-quantity");
+      const cartItem = Array.from(cartList.querySelectorAll(".cart_item")).find(
+        (item) => {
+          return (
+            item.querySelector(".cart_item-name")?.innerText?.trim() ===
+            itemName
+          );
+        }
+      );
+
+      if (cartItem) {
+        const cartItemQuantityElement = cartItem.querySelector(
+          ".cart_item-quantity"
+        );
         const cartItemTotalElement = cartItem.querySelector(".cart_item-total");
         const cartItemPriceElement = cartItem.querySelector(".cart_item-price");
 
-        // Atualiza a quantidade (ex: de "1x" para "2x")
         cartItemQuantityElement.innerText = `${orderQuantity}x`;
 
-        // Lógica para recalcular o total (você precisará extrair o preço unitário)
-        // **Isto é uma simplificação:** Você precisa garantir que o preço seja um número.
-        const priceText = cartItemPriceElement.innerText.replace(/[^0-9.-]+/g, "");
+        const priceText = cartItemPriceElement.innerText.replace(
+          /[^0-9.-]+/g,
+          ""
+        );
         const price = Number(priceText) || 0;
-        
+
         const newTotal = price * orderQuantity;
         cartItemTotalElement.innerText = `$${newTotal.toFixed(2)}`;
-        
-        console.log(cartItemQuantityElement.innerText);
-    } else {
+      } else {
         console.error("Item do carrinho não encontrado para atualização.");
-    }
+      }
+      atualizarTotalDoCarrinho();
     }
 
     //DECREMENT QUANTITY
     if (event.target.closest(".quantity-selector__decrement")) {
       const menuItem = event.target.closest(".menu_item");
-      const _orderQuantity = menuItem.querySelector(".quantity-selector__value");
-      const raw = _orderQuantity?.innerText?.trim() ?? "";
-      const parsed = Number(raw);
+      const _orderQuantity = menuItem.querySelector(
+        ".quantity-selector__value"
+      );
 
-      let orderQuantity = Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+      let orderQuantity = Number(_orderQuantity?.innerText?.trim() ?? "0");
       orderQuantity -= 1;
       _orderQuantity.innerText = orderQuantity;
-      console.log(orderQuantity);
 
-      //DESATIVANDO O quantitySelector E A TIVANDO btnAddCart 
+      //DESATIVANDO O quantitySelector E A TIVANDO btnAddCart
       if (_orderQuantity.innerText < 1) {
         const menuItem = event.target.closest(".menu_item");
         const btnAddCart = menuItem.querySelector(".btn_add-cart");
@@ -178,6 +198,79 @@
         btnAddCart.disabled = false;
         quantitySelector.style.opacity = 0;
         quantitySelector.style.pointerEvents = "none";
+      }
+
+      const itemName =
+        menuItem.dataset.name || menuItem.querySelector(".menu-item-name");
+
+      const cartItem = Array.from(cartList.querySelectorAll(".cart_item")).find(
+        (item) => {
+          return (
+            item.querySelector(".cart_item-name")?.innerText?.trim() ===
+            itemName
+          );
+        }
+      );
+
+      if (cartItem) {
+        const cartItemQuantityElement = cartItem.querySelector(
+          ".cart_item-quantity"
+        );
+        const cartItemPriceElement = cartItem.querySelector(".cart_item-price");
+        const cartItemTotalElement = cartItem.querySelector(".cart_item-total");
+
+        cartItemQuantityElement.innerText = `${orderQuantity}x`;
+
+        const priceText = cartItemPriceElement.innerText.replace(
+          /[^0-9.-]+/g,
+          ""
+        );
+        const price = Number(priceText) || 0;
+
+        const priceTotalText = cartItemTotalElement.innerText.replace(
+          /[^0-9.-]+/g,
+          ""
+        );
+        const priceTotal = Number(priceTotalText) || 0;
+
+        const newTotal = priceTotal - price;
+
+        cartItemTotalElement.innerText = `$${newTotal.toFixed(2)}`;
+
+        if (orderQuantity < 1) {
+          cartItem.remove();
+        }
+      } else {
+        console.error("Item do carrinho não encontrado para atualização.");
+      }
+      atualizarTotalDoCarrinho();
+    }
+  });
+
+  //DELETE ORDER BTN
+  cartList.addEventListener("click", (event) => {
+    if (event.target.closest(".icon_removeItem")) {
+      const cartItem = event.target.closest(".cart_item");
+      const cartItemName = cartItem.querySelector(".cart_item-name").innerText.trim();
+      cartItem.remove();
+      atualizarTotalDoCarrinho();
+
+      if (cartItemName && menu_list) {
+        const menuItem = Array.from(menu_list.querySelectorAll(".menu_item")).find(item => {
+            const menuItemName = item.querySelector(".menu-item-name")?.innerText?.trim();
+            return menuItemName === cartItemName;
+          });
+
+        if (menuItem) {
+          const btnAddCart = menuItem.querySelector(".btn_add-cart");
+          const quantitySelector = menuItem.querySelector(".quantity-selector");
+          //DESATIVANDO O btnAddCart E A TIVANDO quantitySelector
+          btnAddCart.style.opacity = 1;
+          btnAddCart.disabled = false;
+          quantitySelector.style.opacity = 0;
+          quantitySelector.style.pointerEvents = "none";
+          quantitySelector.querySelector(".quantity-selector__value").innerText = 1;
+        }
       }
     }
   });
@@ -194,12 +287,12 @@
   }
 
   // Corrige valores alterados manualmente pelo DevTools
-// setInterval(() => {
-//   document.querySelectorAll(".quantity-selector__value").forEach((el) => {
-//     const parsed = Number(el.innerText.trim());
-//     if (!Number.isFinite(parsed) || parsed < 0) {
-//       el.innerText = 1;
-//     }
-//   });
-// }, 500);
+  // setInterval(() => {
+  //   document.querySelectorAll(".quantity-selector__value").forEach((el) => {
+  //     const parsed = Number(el.innerText.trim());
+  //     if (!Number.isFinite(parsed) || parsed < 0) {
+  //       el.innerText = 1;
+  //     }
+  //   });
+  // }, 500);
 })();
