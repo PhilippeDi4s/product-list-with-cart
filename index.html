@@ -24,13 +24,20 @@
     <main class="main">
       <section class="section_menu">
         <h1 class="section_title">Deserts</h1>
-        <div class="menu_grid" id="menu_list">
-        </div>
+        <div class="menu_grid" id="menu_list"></div>
       </section>
       <section class="section_cart">
         <h2 class="section_subtitle">
           Your Cart (<span id="cart_quantity"></span>)
         </h2>
+        <div class="cart_empty">
+          <img
+            src="/assets/images/illustration-empty-cart.svg"
+            alt="Empty Cart"
+            class="cart_empty-img"
+          />
+          <span class="cart_empty-message">Your added items will appear here</span>
+        </div>
         <ul class="cart_list" id="cartList">
           <!-- <li class="cart_item">
             <div class="cart_item-description">
@@ -81,21 +88,6 @@
         <h1 class="section_title">Order Confirmed</h1>
         <p class="confirm_order-message">We hope you enjoy your food!</p>
         <ul class="order_list">
-          <!-- <li class="order_item">
-            <img
-              src="assets/images/image-baklava-mobile.jpg"
-              alt=""
-              class="order_item-image"
-            />
-            <div class="order_content-center">
-              <span class="order_item-name">Waffle with Berries</span>
-              <div class="order_item-info">
-                <span class="order_item-quantity">$42.00</span>
-                <span class="order_item-price">20x</span>
-              </div>
-            </div>
-            <span class="order_item-total">$128.00</span>
-          </li> -->
           <div class="order_total-container">
             <p class="order_total-label">Order Total</p>
             <span class="order_total" id="order_total">$300</span>

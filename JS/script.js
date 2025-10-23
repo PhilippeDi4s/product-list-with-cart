@@ -26,6 +26,30 @@
     return (cartTotalElement.innerText = `$${totalPrices.toFixed(2)}`);
   }
 
+  function cartEmpty(){
+    const cartContainer = document.querySelector(".section_cart")
+    const emptyCart = cartContainer.querySelector(".cart_empty")
+    const cartTotalContainer = cartContainer.querySelector(".cart_total-container")
+    const cartEcoMessageContainer = cartContainer.querySelector(".eco_message-container")
+    const btnConfirmOrder = cartContainer.querySelector("#confirmOrder")
+
+    const cartItem = cartList.querySelectorAll(".cart_item");
+
+    if(cartItem.length > 0){
+      emptyCart.style.display = "none";
+      cartTotalContainer.style.display = "flex";
+      cartEcoMessageContainer.style.display = "flex";
+      cartList.style.display = "block";
+      btnConfirmOrder.style.display = "block";
+    }else{
+      cartTotalContainer.style.display = "none";
+      cartEcoMessageContainer.style.display = "none";
+      cartList.style.display = "none";
+      btnConfirmOrder.style.display = "none";
+      emptyCart.style.display = "flex";
+    }
+  }
+
   //CARREGAMENTO MENU (Interação com JSON)
   fetch("../data.json")
     .then((response) => response.json())
@@ -128,6 +152,7 @@
             </button>`;
       cartList.appendChild(cartItem);
       atualizarTotalDoCarrinho();
+      cartEmpty()
     }
 
     //INCREASE QUANTITY
@@ -244,6 +269,7 @@
         console.error("Item do carrinho não encontrado para atualização.");
       }
       atualizarTotalDoCarrinho();
+      cartEmpty()
     }
   });
 
@@ -273,6 +299,7 @@
         }
       }
     }
+    cartEmpty()
   });
 
   if (confirmOrder) {

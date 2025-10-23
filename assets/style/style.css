@@ -171,6 +171,22 @@ button {
   font-weight: 700;
 }
 
+.cart_empty{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cart_empty-img {
+  width: 40%;
+  max-width: 12rem;
+}
+
+.cart_empty-message{
+  color: var(--Rose-400);
+}
+
+
 .cart_item {
   display: flex;
   justify-content: space-between;
@@ -268,8 +284,12 @@ button {
   background-color: var(--orange);
 }
 
+.cart_list, .cart_total-container, .eco_message-container, .btn_confirmOrder{
+  display: none;
+}
+
 /* ===============================
-   CONFIRMATION MODAL
+CONFIRMATION MODAL
    =============================== */
 .confirm_order-background {
   width: 100%;
@@ -380,8 +400,12 @@ button {
   .menu_item {
     grid-column: span 6;
   }
-  .btn_add-cart, .quantity-selector{
+  .btn_add-cart,
+  .quantity-selector {
     max-width: none;
+  }
+  .cart_empty-img {
+    max-width: 16rem;
   }
 }
 
@@ -421,5 +445,10 @@ button {
 
   .order_list {
     overflow-y: auto;
+  }
+
+    .cart_empty-img {
+      width: 60%;
+      max-width: 18rem;
   }
 }
