@@ -184,6 +184,7 @@ button {
 
 .cart_empty-message{
   color: var(--Rose-400);
+  margin-bottom: 1rem;
 }
 
 

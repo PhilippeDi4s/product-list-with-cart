@@ -50,6 +50,20 @@
     }
   }
 
+  function cartQuantityCounter(){
+    const cartSection = document.querySelector(".section_cart");
+    const quantityCounterElement = cartSection.querySelector("#cart_quantity");
+    const _cartItemQuantity = document.querySelectorAll(".cart_item-quantity");
+    const x = Array.from(_cartItemQuantity).map(quantity => {
+      const rawText = quantity.innerText.replace("x", "").trim(); 
+      return Number(rawText) || 0;
+    });
+    const cartItemQuantity = x.reduce((unit, total) => {
+      return unit + total;
+    },0)
+    quantityCounterElement.innerText = cartItemQuantity
+  }
+
   //CARREGAMENTO MENU (Interação com JSON)
   fetch("../data.json")
     .then((response) => response.json())
@@ -153,6 +167,7 @@
       cartList.appendChild(cartItem);
       atualizarTotalDoCarrinho();
       cartEmpty()
+      cartQuantityCounter();
     }
 
     //INCREASE QUANTITY
@@ -200,6 +215,7 @@
         console.error("Item do carrinho não encontrado para atualização.");
       }
       atualizarTotalDoCarrinho();
+      cartQuantityCounter()
     }
 
     //DECREMENT QUANTITY
@@ -270,6 +286,7 @@
       }
       atualizarTotalDoCarrinho();
       cartEmpty()
+      cartQuantityCounter();
     }
   });
 
@@ -300,6 +317,7 @@
       }
     }
     cartEmpty()
+    cartQuantityCounter();
   });
 
   if (confirmOrder) {
