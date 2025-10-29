@@ -148,8 +148,7 @@ button {
   font-size: 0.9rem;
 }
 
-.menu-item-name,
-.order_item-name {
+.menu-item-name {
   color: var(--Rose-900);
 }
 
@@ -171,7 +170,7 @@ button {
   font-weight: 700;
 }
 
-.cart_empty{
+.cart_empty {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -182,11 +181,10 @@ button {
   max-width: 12rem;
 }
 
-.cart_empty-message{
+.cart_empty-message {
   color: var(--Rose-400);
   margin-bottom: 1rem;
 }
-
 
 .cart_item {
   display: flex;
@@ -268,10 +266,12 @@ button {
   border-radius: 10px;
 }
 
-.btn_confirmOrder {
+.btn_confirmOrder,
+.btn_startNewOrder {
   display: block;
-  margin: 1rem auto;
+  margin: 1.4rem auto;
   width: 80%;
+  max-width: 19.5rem;
   padding: 0.8rem 0;
   border-radius: 20px;
   border: none;
@@ -285,7 +285,10 @@ button {
   background-color: var(--orange);
 }
 
-.cart_list, .cart_total-container, .eco_message-container, .btn_confirmOrder{
+.cart_list,
+.cart_total-container,
+.eco_message-container,
+.btn_confirmOrder {
   display: none;
 }
 
@@ -305,9 +308,10 @@ CONFIRMATION MODAL
 }
 
 .confirm_order {
+  margin: 0 auto;
   background-color: var(--Rose-50);
   border-radius: 10px;
-  padding: 2rem 1.5rem;
+  padding: 2rem 1.5rem 0.1px;
 }
 
 .confirm_order-message {
@@ -315,20 +319,35 @@ CONFIRMATION MODAL
   margin-bottom: 1.2rem;
 }
 
+.confirm_order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.icon_confirm_order {
+  width: clamp(2rem, 9vw, 3rem);
+}
+
+.icon_close-modal {
+  width: clamp(1rem, 7vw, 2rem);
+  cursor: pointer;
+}
+
 /* ===============================
    ORDER SUMMARY
    =============================== */
 .order_list {
   background-color: var(--Rose-100);
-  border-radius: 10px;
-  padding-bottom: 0.1px;
+  border-radius: 10px 10px 0 0;
 }
 
 .order_item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.5rem;
+  padding: 1.5rem 1rem;
   position: relative;
 }
 
@@ -344,16 +363,33 @@ CONFIRMATION MODAL
   bottom: 0;
 }
 
+.order_item-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+}
+
 .order_item-image {
-  max-width: 30%;
-  border-radius: 10px;
+  width: 35%;
+  border-radius: 6px;
 }
 
 .order_content-center {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 1rem;
   margin-left: 1rem;
+}
+
+.order_item-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: clamp(6rem, 40vw, 20rem);
+  font-size: 0.9rem;
+  color: var(--Rose-900);
+  font-weight: 600;
 }
 
 .order_item-info {
@@ -361,12 +397,8 @@ CONFIRMATION MODAL
   gap: 0.8rem;
 }
 
-.order_item-name {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 120px;
-  font-size: 0.9rem;
+.order_item-individual-price {
+  color: var(--Rose-300);
 }
 
 .order_item-total {
@@ -375,12 +407,14 @@ CONFIRMATION MODAL
 }
 
 .order_total-container {
-  margin-top: 1.3rem;
+  background-color: var(--Rose-100);
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   gap: 6rem;
   margin-bottom: 1rem;
+  padding: 2rem 1.5rem;
+  border-radius: 0 0 10px 10px;
 }
 
 /* ===============================
@@ -407,6 +441,10 @@ CONFIRMATION MODAL
   }
   .cart_empty-img {
     max-width: 16rem;
+  }
+
+  .confirm_order-background {
+    padding: 0 4rem;
   }
 }
 
@@ -435,10 +473,6 @@ CONFIRMATION MODAL
     width: 30%;
   }
 
-  .confirm_order-background {
-    padding: 1rem 0 0 0;
-  }
-
   .confirm_order {
     width: 40%;
     margin: 0 auto;
@@ -448,8 +482,16 @@ CONFIRMATION MODAL
     overflow-y: auto;
   }
 
-    .cart_empty-img {
-      width: 60%;
-      max-width: 18rem;
+  .cart_empty-img {
+    width: 60%;
+    max-width: 18rem;
+  }
+
+  .order_item-image {
+    width: 17%;
+  }
+
+  .confirm_order-background {
+    padding: 2rem 0 0 0;
   }
 }
